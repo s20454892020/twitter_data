@@ -18,7 +18,7 @@ library(lubridate)
 # The connection to the mongo DB, please carve the code up if you want list response out. Or even better work out how to flatten the JSON response into nice dataframe.
 conn =  "mongodb://[hjy:123456@127.0.0.1:27017/admin] "
 
-bearer_token <- "AAAAAAAAAAAAAAAAAAAAAOfTQAEAAAAAAZ%2BbdJEsMLySSwUX0rED1%2FS0C9U%3D9aMnHKIGIgVqJTFKkrRoZ1QDaXyt6y70n73qolIpwZM9ZpFeJa"
+bearer_token <- " "
 
 headers <- c(`Authorization` = sprintf('Bearer %s', bearer_token))
 
