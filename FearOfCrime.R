@@ -18,8 +18,7 @@ library(lubridate)
 # The connection to the mongo DB, please carve the code up if you want list response out. Or even better work out how to flatten the JSON response into nice dataframe.
 conn =  "mongodb://[hjy:123456@127.0.0.1:27017/admin] "
 
-bearer_token <- "AAAAAAAAAAAAAAAAAAAAAOfTQAEAAAAAAZ%2BbdJEsMLySSwUX0rED1%2FS0C9U%3D9aMnHKIGIgVqJTFKkrRoZ1QDaXyt6y70n73qolIpwZM9ZpFeJa
-"
+bearer_token <- "AAAAAAAAAAAAAAAAAAAAAOfTQAEAAAAAAZ%2BbdJEsMLySSwUX0rED1%2FS0C9U%3D9aMnHKIGIgVqJTFKkrRoZ1QDaXyt6y70n73qolIpwZM9ZpFeJa"
 
 headers <- c(`Authorization` = sprintf('Bearer %s', bearer_token))
 
@@ -135,9 +134,13 @@ keyword_spatial_search <- function(db_name,start_date,end_date,spatial_query,key
 # Similar to SQL boolean logic but nothing for AND below search for altcar only when fracking or shale are present
 # Has geo returns point data
 # key term search
-keyword_query = '("fear" OR "horror" OR "panic" OR "dread" OR "anxiety" OR "worry" OR "concern" OR "scare" ) lang:en'
+#keyword_query = '(fear OR horror OR panic OR dread OR anxiety OR worry OR concern OR scare ) lang:en'
+keyword_query = '(football OR "Manchester United" OR "Paul Pogba") lang:en'
 # spatial seach add here
-spatial_query = 'place_country:GB'
+#spatial_query = 'place_country:GB'
+spatial_query = 'place_country:GB OR place_country:US'
 
 # call main function and give a new Mongo output DB. 
-data_returned <- keyword_spatial_search(db_name = 'FearofCrime',start_date = '2021-02-01T00:00:00Z',end_date = '2021-06-01T00:00:00Z', spatial_query = spatial_query , keyword_query = keyword_query,tweets_per_request = 100)
+#data_returned <- keyword_spatial_search(db_name = 'FearofCrime',start_date = '2021-02-01T02:00:00Z',end_date = '2021-06-01T02:00:00Z', spatial_query = spatial_query , keyword_query = keyword_query,tweets_per_request = 100)
+data_returned <- keyword_spatial_search(db_name = 'football',start_date = '2011-02-11T02:00:00Z',end_date = '2012-02-11T02:01:00Z', spatial_query = spatial_query , keyword_query = keyword_query,tweets_per_request = 100)
+
