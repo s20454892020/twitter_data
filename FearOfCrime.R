@@ -22,6 +22,8 @@ library(tidyverse)
 library(lubridate)
 library(readr)
 
+source("./sendMongo.R")
+
 # The connection to the mongo DB, please carve the code up if you want list response out. Or even better work out how to flatten the JSON response into nice dataframe.
 conn =  "mongodb://[hjy:123456@127.0.0.1:27017/admin]"
 
@@ -29,17 +31,7 @@ bearer_token <- read_file("./twitter_credential.txt")
 
 headers <- c(`Authorization` = sprintf('Bearer %s', bearer_token))
 
-# Function for pulling correct datatime from Twitter response
-send_Mongo <- function(data,con){
-  for(i in 1:length(data)){
-    if(!is.null(data[[i]]$created_at)){
-      data[[i]]$created_at <- as.POSIXct(data[[i]]$created_at,format="%Y-%m-%dT%H:%M:%OS")
-    }
-    data[[i]]$ingestion_date <- Sys.time()
-    item <- data[[i]]
-    con$insert(item)
-  }
-}
+
 
 # Main function
 send_token_retrieve_data <- function(query_term_combined,tweets_per_request,start_date_request,end_date_request, next_token,headers){
@@ -148,7 +140,7 @@ keyword_query = '(football OR "Manchester United" OR "Paul Pogba") lang:en'
 spatial_query = 'place_country:GB OR place_country:US'
 
 # call main function and give a new Mongo output DB. 
-#data_returned <- keyword_spatial_search(db_name = 'FearofCrime',start_date = '2021-02-01T02:00:00Z',end_date = '2021-06-01T02:00:00Z', spatial_query = spatial_query , keyword_query = keyword_query,tweets_per_request = 100)
+# data_returned <- keyword_spatial_search(db_name = 'FearofCrime',start_date = '2021-02-01T02:00:00Z', end_date = '2021-06-01T02:00:00Z', spatial_query = spatial_query , keyword_query = keyword_query,tweets_per_request = 100)
 data_returned <- keyword_spatial_search(db_name = 'football',
                                         start_date = '2021-02-01T02:00:00Z',
                                         end_date = '2021-06-01T02:00:00Z', 
